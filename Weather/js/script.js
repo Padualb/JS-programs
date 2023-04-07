@@ -1,0 +1,1 @@
+let weatherAPIkey = 'b55002c98650706b2d6e3c1d6907a2ea';
