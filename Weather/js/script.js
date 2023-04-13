@@ -1,6 +1,6 @@
 let weatherAPIkey = 'b55002c98650706b2d6e3c1d6907a2ea';
 let weatherBaseEndpoint = 'https://api.openweathermap.org/data/2.5/weather?units=metric&appid=' + weatherAPIkey;
-
+let forecastBaseEndpoint = 'https://api.openweathermap.org/data/2.5/forecast?units=metric&appid=' + weatherAPIkey;
 
 let city = document.querySelector(".weather-city");
 let day = document.querySelector(".weather-day");
@@ -24,8 +24,8 @@ let getWeatherByCityName = async(city) => {
 search.addEventListener('keydown', async (e) => {
     if(e.keyCode === 13){
         let weather = await getWeatherByCityName(search.value);
-        console.log(weather);
         updateCurrentWeather(weather);
+        getForecastByCityID(weather.id);
     }
 })
 
@@ -43,3 +43,25 @@ let updateCurrentWeather = (data) => {
 let dayOfWeek = () => {
     return new Date().toLocaleDateString('en-EN', {'weekday' : 'long'})
 }
+
+let getForecastByCityID = async (id) => {
+    let endpoint = forecastBaseEndpoint + '&id=' + id;
+    let result = await fetch(endpoint);
+    let forecast = await result.json();
+    let forecastList = forecast.list;
+    let daily = [];
+    
+
+    forecastList.forEach(day => {
+        let date = new Date(day.dt_txt.replace(' ', 'T'));
+        let hours = date.getHours();
+        
+        if(hours === 12){
+            daily.push(day);
+        }
+
+        
+    });
+}
+
+// https://openweathermap.org/img/wn/10d@2x.png
