@@ -5,12 +5,12 @@ let forecastBaseEndpoint = 'https://api.openweathermap.org/data/2.5/forecast?uni
 let city = document.querySelector(".weather-city");
 let day = document.querySelector(".weather-day");
 let humidity = document.querySelector(".weather-indicator-humidity>.value");
-let wind = document.querySelector(".weather-indicator-wind>.value");
 let pressure = document.querySelector(".weather-indicator-pressure>.value");
 let image = document.querySelector("weather-image");
 let temperature = document.querySelector(".weather-temperature>.value");
 let search = document.querySelector(".weather-search");
 let forecastBlock = document.querySelector('.weather-forecast');
+let weatherImage = document.querySelector('.weather-image');
 
 
 
@@ -26,6 +26,8 @@ search.addEventListener('keydown', async (e) => {
     if(e.keyCode === 13){
         let weather = await getWeatherByCityName(search.value);
         updateCurrentWeather(weather);
+        weatherCityImg(weather);
+        console.log(weather);
         let forecast = await getForecastByCityID(weather.id);
         updateForecast(forecast);
     }
@@ -38,12 +40,32 @@ let updateCurrentWeather = (data) => {
     day.textContent = dayOfWeek(data);
     humidity.textContent = data.main.humidity + '%';
     pressure.textContent = data.main.pressure + 'hPa';
-    wind.textContent = data.main.wind + '%';
+}
+
+let weatherCityImg = (data) =>{
+    weatherDes = data.weather[0].description.replace(' ', '-');
+    weatherMain = data.weather[0].main;
+    
+    
+    var img = new Image();
+    file = 'assets/images/' + weatherDes + '.png';
+    img.src = file;
+    
+    img.onload = function() {
+        weatherImage.src = file;
+      }
+    img.onerror = function() {
+        weatherImage.src = 'assets/images/' + weatherMain + '.png';
+      }
+  
+     
 
 }
 
 let dayOfWeek = (dt = new Date().getTime()) => {
-    return new Date(dt).toLocaleDateString('en-EN', {'weekday' : 'long'})
+    
+    return new Date(dt).toLocaleDateString('en-EN', {'weekday' : 'long'});
+    
 }
 
 let getForecastByCityID = async (id) => {
@@ -83,4 +105,3 @@ let updateForecast = (forecast) => {
         forecastBlock.insertAdjacentHTML('beforeend', forecastItem);
     })
 }
-// 
