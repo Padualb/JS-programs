@@ -10,6 +10,7 @@ let pressure = document.querySelector(".weather-indicator-pressure>.value");
 let image = document.querySelector("weather-image");
 let temperature = document.querySelector(".weather-temperature>.value");
 let search = document.querySelector(".weather-search");
+let forecastBlock = document.querySelector('.weather-forecast');
 
 
 
@@ -25,7 +26,8 @@ search.addEventListener('keydown', async (e) => {
     if(e.keyCode === 13){
         let weather = await getWeatherByCityName(search.value);
         updateCurrentWeather(weather);
-        getForecastByCityID(weather.id);
+        let forecast = await getForecastByCityID(weather.id);
+        updateForecast(forecast);
     }
 })
 
@@ -40,8 +42,8 @@ let updateCurrentWeather = (data) => {
 
 }
 
-let dayOfWeek = () => {
-    return new Date().toLocaleDateString('en-EN', {'weekday' : 'long'})
+let dayOfWeek = (dt = new Date().getTime()) => {
+    return new Date(dt).toLocaleDateString('en-EN', {'weekday' : 'long'})
 }
 
 let getForecastByCityID = async (id) => {
@@ -62,6 +64,23 @@ let getForecastByCityID = async (id) => {
 
         
     });
+    return daily;
 }
 
-// https://openweathermap.org/img/wn/10d@2x.png
+let updateForecast = (forecast) => {
+    forecastBlock.innerHTML = '';
+    forecast.forEach(day =>{
+        let iconUrl = 'https://openweathermap.org/img/wn/' + day.weather[0].icon + '@2x.png';
+        let dayName = dayOfWeek(day.dt * 1000);
+        let temp = Math.round(day.main.temp) + '°';
+        let forecastItem = `
+            <article class="weather-forecast-item">
+                <img src="${iconUrl}" alt="${day.weather[0].description}" class="weather-forecast-item">
+                <h3 class="weather-forecast-day">${dayName}</h3>
+                <p class="weather-forecast-temperature"><span class="value">${temp}</span></p>
+            </article>
+        `
+        forecastBlock.insertAdjacentHTML('beforeend', forecastItem);
+    })
+}
+// 
