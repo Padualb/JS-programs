@@ -56,6 +56,7 @@ body{
 .weather-today{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 30px;
 }
 .weather-image{
     width: 30vmin;
