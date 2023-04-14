@@ -94,7 +94,10 @@ body{
     background-image: url(../assets/images/humidity.png);
 
 }
+.weather-indicator-status::before{
+    background-image: url(../assets/images/wind.png);
 
+}
 .weather-indicator-pressure::before{
     background-image: url(../assets/images/pressure.png);
 
