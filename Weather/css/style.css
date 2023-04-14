@@ -45,10 +45,13 @@ body{
     width: 100%;
     padding: 15px 10px;
     border: none;
-    background-color: rgb(120, 120, 138);
+    background-color: rgb(132, 147, 167);
     color: inherit;
     margin-bottom: 20px;
+    border-radius: 5px;
+    
 }
+
 .weather-search::placeholder{
     color: white;
 }
@@ -61,6 +64,10 @@ body{
 .weather-image{
     width: 30vmin;
     align-self: center;
+}
+.weather-image:hover{
+    /* transform: scale(1.1); */
+    transform: rotate(10deg);
 }
 .weather-city{
     font-size: 36px;
@@ -87,10 +94,7 @@ body{
     background-image: url(../assets/images/humidity.png);
 
 }
-.weather-indicator-wind::before{
-    background-image: url(../assets/images/wind.png);
 
-}
 .weather-indicator-pressure::before{
     background-image: url(../assets/images/pressure.png);
 
@@ -117,4 +121,13 @@ body{
     min-width: 150px;
     width: calc(20% - 20px);
     flex-grow: 1;
+    
+}
+.weather-forecast-item:hover{
+    transform: scale(1.1);
+}
+
+.main-title {
+    display: flex;
+    justify-content: center;
 }
