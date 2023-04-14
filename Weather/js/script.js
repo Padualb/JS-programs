@@ -37,7 +37,7 @@ search.addEventListener('keydown', async (e) => {
 let updateCurrentWeather = (data) => {
     city.textContent = data.name + ', '+ data.sys.country;
     temperature.textContent = Math.round(data.main.temp) + '°';
-    day.textContent = dayOfWeek(data);
+    day.textContent = dayOfWeek();
     humidity.textContent = data.main.humidity + '%';
     pressure.textContent = data.main.pressure + 'hPa';
 }
@@ -63,7 +63,7 @@ let weatherCityImg = (data) =>{
 }
 
 let dayOfWeek = (dt = new Date().getTime()) => {
-    
+    console.log(dt);
     return new Date(dt).toLocaleDateString('en-EN', {'weekday' : 'long'});
     
 }
