@@ -22,14 +22,20 @@ let getWeatherByCityName = async(city) => {
     
 }
 
-search.addEventListener('keydown', async (e) => {
-    if(e.keyCode === 13){
-        let weather = await getWeatherByCityName(search.value);
+let weatherForCity = async (city) => {
+    let weather = await getWeatherByCityName(city);
         updateCurrentWeather(weather);
         weatherCityImg(weather);
         console.log(weather);
         let forecast = await getForecastByCityID(weather.id);
         updateForecast(forecast);
+
+}
+
+search.addEventListener('keydown', async (e) => {
+    if(e.keyCode === 13){
+        weatherForCity(search.value)
+        
     }
 })
 
@@ -105,3 +111,9 @@ let updateForecast = (forecast) => {
         forecastBlock.insertAdjacentHTML('beforeend', forecastItem);
     })
 }
+
+let init = async () => {
+    await weatherForCity('Sydney');
+}
+
+init();
