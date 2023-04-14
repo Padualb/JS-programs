@@ -6,6 +6,7 @@ let city = document.querySelector(".weather-city");
 let day = document.querySelector(".weather-day");
 let humidity = document.querySelector(".weather-indicator-humidity>.value");
 let pressure = document.querySelector(".weather-indicator-pressure>.value");
+let status = document.querySelector(".weather-indicator-status>.value");
 let image = document.querySelector("weather-image");
 let temperature = document.querySelector(".weather-temperature>.value");
 let search = document.querySelector(".weather-search");
@@ -69,7 +70,6 @@ let weatherCityImg = (data) =>{
 }
 
 let dayOfWeek = (dt = new Date().getTime()) => {
-    console.log(dt);
     return new Date(dt).toLocaleDateString('en-EN', {'weekday' : 'long'});
     
 }
