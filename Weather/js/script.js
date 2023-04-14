@@ -26,7 +26,6 @@ let weatherForCity = async (city) => {
     let weather = await getWeatherByCityName(city);
         updateCurrentWeather(weather);
         weatherCityImg(weather);
-        console.log(weather);
         let forecast = await getForecastByCityID(weather.id);
         updateForecast(forecast);
 
@@ -44,6 +43,7 @@ let updateCurrentWeather = (data) => {
     city.textContent = data.name + ', '+ data.sys.country;
     temperature.textContent = Math.round(data.main.temp) + '°';
     day.textContent = dayOfWeek();
+    status.textContent =  firstLetterUp(data.weather[0].description);
     humidity.textContent = data.main.humidity + '%';
     pressure.textContent = data.main.pressure + 'hPa';
 }
@@ -114,6 +114,13 @@ let updateForecast = (forecast) => {
 
 let init = async () => {
     await weatherForCity('Sydney');
+}
+
+let firstLetterUp = (word) => {
+    let firstLetter = word.charAt(0);
+    let remainingLetters = word.substring(1)
+    firstLetter = firstLetter.toUpperCase();
+    return firstLetter + remainingLetters;
 }
 
 init();
